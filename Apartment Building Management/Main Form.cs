@@ -46,5 +46,14 @@ namespace Apartment_Building_Management
             categoriesOfCost.whileEditingControlsStatus(false);
             categoriesOfCost.Show();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            filteredFormBasedOnLocation apartments = new filteredFormBasedOnLocation();
+            string queryString = "select distinct bArea from buildings order by bArea";
+            apartments.fillTheComboBox(queryString, apartments.AreaComboBox);
+            apartments.Show();
+        }
     }
 }

@@ -48,7 +48,7 @@
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(461, 42);
+            this.exitBtn.Location = new System.Drawing.Point(474, 58);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(75, 23);
             this.exitBtn.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // editBtn
             // 
-            this.editBtn.Location = new System.Drawing.Point(314, 41);
+            this.editBtn.Location = new System.Drawing.Point(393, 58);
             this.editBtn.Name = "editBtn";
             this.editBtn.Size = new System.Drawing.Size(75, 23);
             this.editBtn.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             // cancelBtn
             // 
-            this.cancelBtn.Location = new System.Drawing.Point(474, 363);
+            this.cancelBtn.Location = new System.Drawing.Point(474, 341);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(75, 23);
             this.cancelBtn.TabIndex = 3;
@@ -78,7 +78,7 @@
             // 
             // deleteBtn
             // 
-            this.deleteBtn.Location = new System.Drawing.Point(361, 363);
+            this.deleteBtn.Location = new System.Drawing.Point(393, 341);
             this.deleteBtn.Name = "deleteBtn";
             this.deleteBtn.Size = new System.Drawing.Size(75, 23);
             this.deleteBtn.TabIndex = 4;
@@ -88,7 +88,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(255, 363);
+            this.saveBtn.Location = new System.Drawing.Point(312, 341);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.TabIndex = 5;

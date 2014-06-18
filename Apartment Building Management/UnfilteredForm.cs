@@ -19,10 +19,33 @@ namespace Apartment_Building_Management
         private BindingSource bindingSource1;
         private SqlDataAdapter adapter;
 
+        public string ConnectionString
+        {
+            get { return connectionString; }
+            set { connectionString = value; }
+        }
+
         public DataGridView UnfilteredDataGridView
         {
             get { return unfilteredDataGridView; }
             set { unfilteredDataGridView = value; }
+        }
+
+        public Button EditBtn
+        {
+            get { return editBtn; }
+            set { editBtn = value; }
+        }
+
+        public UnfilteredForm()
+        {
+            InitializeComponent();
+            connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
+
+            initializeControlGroups();
+
+            bindingSource1 = new BindingSource();
+            unfilteredDataGridView.DataSource = bindingSource1;
         }
 
         public UnfilteredForm(string queryString)
@@ -30,6 +53,17 @@ namespace Apartment_Building_Management
             InitializeComponent();
             connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=C:\databases\abmDB.mdf;Integrated Security=True;Connect Timeout=30";
 
+            initializeControlGroups();
+
+            bindingSource1 = new BindingSource();
+            unfilteredDataGridView.DataSource = bindingSource1;
+
+            adapter = new SqlDataAdapter(queryString, connectionString);
+            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(adapter);
+        }
+
+        public void initializeControlGroups()
+        {
             whileNotEditingControls = new Control[2];
             whileEditingControls = new Control[3];
 
@@ -38,12 +72,6 @@ namespace Apartment_Building_Management
             whileEditingControls[0] = saveBtn;
             whileEditingControls[1] = deleteBtn;
             whileEditingControls[2] = cancelBtn;
-
-            bindingSource1 = new BindingSource();
-            unfilteredDataGridView.DataSource = bindingSource1;
-
-            adapter = new SqlDataAdapter(queryString, connectionString);
-            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(adapter);
         }
 
         private void unfilteredDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -162,7 +190,14 @@ namespace Apartment_Building_Management
         {
             foreach (DataGridViewRow item in this.unfilteredDataGridView.SelectedRows)
             {
-                unfilteredDataGridView.Rows.RemoveAt(item.Index);
+                try
+                {
+                    unfilteredDataGridView.Rows.RemoveAt(item.Index);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -188,6 +223,7 @@ namespace Apartment_Building_Management
                 }
                 catch (SqlException sqlEx)
                 {
+                    GetData();
                     switch (sqlEx.Number)
                     {
                         case 2627:
@@ -215,15 +251,16 @@ namespace Apartment_Building_Management
             }
             else if (result == DialogResult.No)
             {
-                MessageBox.Show("Not Saved!");
                 try
                 {
                     GetData();
+                    MessageBox.Show("Not Saved!");
                     whileEditingControlsStatus(false);
                     whileNotEditingControlsStatus(true);
                 }
                 catch
                 {
+                    MessageBox.Show("Not Saved!");
                     MessageBox.Show("Reloading from database failed");
                 }
             }
