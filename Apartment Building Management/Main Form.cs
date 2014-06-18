@@ -47,13 +47,34 @@ namespace Apartment_Building_Management
             categoriesOfCost.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void apartmentsBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
             filteredFormBasedOnLocation apartments = new filteredFormBasedOnLocation();
             string queryString = "select distinct bArea from buildings order by bArea";
             apartments.fillTheComboBox(queryString, apartments.AreaComboBox);
+
+            apartments.whileEditingControlsStatus(false);
+            apartments.whileNotEditingControlsStatus(true);
+            apartments.EditBtn.Hide();
+            apartments.UnfilteredDataGridView.Hide();
+            apartments.addressComboBox.Enabled = false;
             apartments.Show();
+        }
+
+        private void dapanesBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            filteredFormBasedOnLocationAndTime dapanes = new filteredFormBasedOnLocationAndTime();
+            string queryString = "select distinct bArea from buildings order by bArea";
+            dapanes.fillTheComboBox(queryString, dapanes.AreaComboBox);
+
+            dapanes.whileEditingControlsStatus(false);
+            dapanes.whileNotEditingControlsStatus(true);
+            dapanes.EditBtn.Hide();
+            dapanes.UnfilteredDataGridView.Hide();
+            dapanes.addressComboBox.Enabled = false;
+            dapanes.Show();
         }
     }
 }

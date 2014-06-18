@@ -9,3 +9,4 @@ c:\users\adand\documents\visual studio 2013\Projects\Apartment Building Manageme
 c:\users\adand\documents\visual studio 2013\Projects\Apartment Building Management\Apartment Building Management\obj\Debug\Apartment Building Management.csprojResolveAssemblyReference.cache
 c:\users\adand\documents\visual studio 2013\Projects\Apartment Building Management\Apartment Building Management\obj\Debug\Apartment_Building_Management.UnfilteredForm.resources
 C:\Users\adand\Documents\Visual Studio 2013\Projects\Apartment Building Management\Apartment Building Management\obj\Debug\Apartment_Building_Management.filteredFormBasedOnLocation.resources
+C:\Users\adand\Documents\Visual Studio 2013\Projects\Apartment Building Management\Apartment Building Management\obj\Debug\Apartment_Building_Management.filteredFormBasedOnLocationAndTime.resources

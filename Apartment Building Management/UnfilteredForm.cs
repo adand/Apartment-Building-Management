@@ -25,6 +25,8 @@ namespace Apartment_Building_Management
             set { connectionString = value; }
         }
 
+        public int MyProperty { get; set; }
+
         public DataGridView UnfilteredDataGridView
         {
             get { return unfilteredDataGridView; }
@@ -35,6 +37,18 @@ namespace Apartment_Building_Management
         {
             get { return editBtn; }
             set { editBtn = value; }
+        }
+
+        public SqlDataAdapter Adapter
+        {
+            get { return adapter; }
+            set { adapter = value; }
+        }
+
+        public BindingSource BindingSource1
+        {
+            get { return bindingSource1; }
+            set { bindingSource1 = value; }
         }
 
         public UnfilteredForm()
@@ -201,7 +215,12 @@ namespace Apartment_Building_Management
             }
         }
 
-        private void saveBtn_Click(object sender, EventArgs e)
+        public virtual void saveBtn_Click(object sender, EventArgs e)
+        {
+            save();
+        }
+
+        public void save()
         {
             string message = "Are you sure you want to update the database with changes?";
             string caption = "Update confirmation";

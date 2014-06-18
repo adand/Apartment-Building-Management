@@ -40,15 +40,15 @@
             // unfilteredDataGridView
             // 
             this.unfilteredDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.unfilteredDataGridView.Location = new System.Drawing.Point(86, 87);
+            this.unfilteredDataGridView.Location = new System.Drawing.Point(12, 119);
             this.unfilteredDataGridView.Name = "unfilteredDataGridView";
-            this.unfilteredDataGridView.Size = new System.Drawing.Size(463, 248);
+            this.unfilteredDataGridView.Size = new System.Drawing.Size(651, 248);
             this.unfilteredDataGridView.TabIndex = 0;
             this.unfilteredDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.unfilteredDataGridView_CellContentClick);
             // 
             // exitBtn
             // 
-            this.exitBtn.Location = new System.Drawing.Point(474, 58);
+            this.exitBtn.Location = new System.Drawing.Point(588, 90);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(75, 23);
             this.exitBtn.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // editBtn
             // 
-            this.editBtn.Location = new System.Drawing.Point(393, 58);
+            this.editBtn.Location = new System.Drawing.Point(507, 90);
             this.editBtn.Name = "editBtn";
             this.editBtn.Size = new System.Drawing.Size(75, 23);
             this.editBtn.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             // cancelBtn
             // 
-            this.cancelBtn.Location = new System.Drawing.Point(474, 341);
+            this.cancelBtn.Location = new System.Drawing.Point(588, 373);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(75, 23);
             this.cancelBtn.TabIndex = 3;
@@ -78,7 +78,7 @@
             // 
             // deleteBtn
             // 
-            this.deleteBtn.Location = new System.Drawing.Point(393, 341);
+            this.deleteBtn.Location = new System.Drawing.Point(507, 373);
             this.deleteBtn.Name = "deleteBtn";
             this.deleteBtn.Size = new System.Drawing.Size(75, 23);
             this.deleteBtn.TabIndex = 4;
@@ -88,7 +88,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Location = new System.Drawing.Point(312, 341);
+            this.saveBtn.Location = new System.Drawing.Point(426, 373);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 23);
             this.saveBtn.TabIndex = 5;
@@ -122,6 +122,6 @@
         private System.Windows.Forms.Button editBtn;
         private System.Windows.Forms.Button cancelBtn;
         private System.Windows.Forms.Button deleteBtn;
-        private System.Windows.Forms.Button saveBtn;
+        public System.Windows.Forms.Button saveBtn;
     }
 }

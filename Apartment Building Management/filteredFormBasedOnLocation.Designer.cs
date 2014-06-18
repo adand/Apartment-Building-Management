@@ -37,7 +37,7 @@
             // areaComboBox
             // 
             this.areaComboBox.FormattingEnabled = true;
-            this.areaComboBox.Location = new System.Drawing.Point(86, 60);
+            this.areaComboBox.Location = new System.Drawing.Point(12, 25);
             this.areaComboBox.Name = "areaComboBox";
             this.areaComboBox.Size = new System.Drawing.Size(121, 21);
             this.areaComboBox.TabIndex = 0;
@@ -46,7 +46,7 @@
             // addressComboBox
             // 
             this.addressComboBox.FormattingEnabled = true;
-            this.addressComboBox.Location = new System.Drawing.Point(240, 60);
+            this.addressComboBox.Location = new System.Drawing.Point(162, 25);
             this.addressComboBox.Name = "addressComboBox";
             this.addressComboBox.Size = new System.Drawing.Size(121, 21);
             this.addressComboBox.TabIndex = 1;
@@ -55,7 +55,7 @@
             // areaLbl
             // 
             this.areaLbl.AutoSize = true;
-            this.areaLbl.Location = new System.Drawing.Point(83, 44);
+            this.areaLbl.Location = new System.Drawing.Point(9, 9);
             this.areaLbl.Name = "areaLbl";
             this.areaLbl.Size = new System.Drawing.Size(32, 13);
             this.areaLbl.TabIndex = 2;
@@ -65,7 +65,7 @@
             // addressLbl
             // 
             this.addressLbl.AutoSize = true;
-            this.addressLbl.Location = new System.Drawing.Point(237, 44);
+            this.addressLbl.Location = new System.Drawing.Point(159, 9);
             this.addressLbl.Name = "addressLbl";
             this.addressLbl.Size = new System.Drawing.Size(48, 13);
             this.addressLbl.TabIndex = 3;
@@ -83,6 +83,7 @@
             this.Name = "filteredFormBasedOnLocation";
             this.Text = "filteredFormBasedOnLocation";
             this.Load += new System.EventHandler(this.filteredFormBasedOnLocation_Load);
+            this.Controls.SetChildIndex(this.saveBtn, 0);
             this.Controls.SetChildIndex(this.areaComboBox, 0);
             this.Controls.SetChildIndex(this.addressComboBox, 0);
             this.Controls.SetChildIndex(this.areaLbl, 0);
@@ -94,8 +95,8 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox areaComboBox;
-        private System.Windows.Forms.ComboBox addressComboBox;
+        public System.Windows.Forms.ComboBox areaComboBox;
+        public System.Windows.Forms.ComboBox addressComboBox;
         private System.Windows.Forms.Label areaLbl;
         private System.Windows.Forms.Label addressLbl;
     }
