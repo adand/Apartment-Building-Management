@@ -13,9 +13,53 @@ namespace Apartment_Building_Management
 {
     public partial class filteredFormBasedOnLocationAndTime : filteredFormBasedOnLocation
     {
-        public filteredFormBasedOnLocationAndTime()
+        private string[] name;
+        private SqlDbType[] type;
+        private string[] column;
+        private string[] value;
+        private string selectQuery;
+        private int commandParameters;
+
+        public string[] _Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public SqlDbType[] Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+
+        public string[] Column
+        {
+            get { return column; }
+            set { column = value; }
+        }
+
+        public ComboBox MonthComboBox
+        {
+            get { return monthComboBox; }
+            set { monthComboBox = value; }
+        }
+
+        public ComboBox YearComboBox
+        {
+            get { return yearComboBox; }
+            set { yearComboBox = value; }
+        }
+
+        public filteredFormBasedOnLocationAndTime(string selectQuery, int commandParameters)
         {
             InitializeComponent();
+
+            name = new string[commandParameters];
+            type = new SqlDbType[commandParameters];
+            column = new string[commandParameters];
+            value = new string[commandParameters];
+            this.selectQuery = selectQuery;
+            this.commandParameters = commandParameters;
 
             string[] monthNames = { "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος",
                                   "Νοέμβριος", "Δεκέμβριος" };
@@ -37,6 +81,7 @@ namespace Apartment_Building_Management
 
         public override void areaComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            addressComboBox.Enabled = true;
             areaChanged();
             monthComboBox.SelectedIndex = -1;
             yearComboBox.SelectedIndex = -1;
@@ -48,8 +93,6 @@ namespace Apartment_Building_Management
             yearComboBox.SelectedIndex = -1;
         }
 
-
-
         private void yearComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -57,9 +100,18 @@ namespace Apartment_Building_Management
 
         private void monthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (monthComboBox.SelectedIndex != -1)
+            if (monthComboBox.SelectedIndex != -1 && areaComboBox.SelectedIndex != -1)
             {
+                string queryString = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
+                string areaParameter = areaComboBox.SelectedItem.ToString();
+                string addressParameter = addressComboBox.SelectedItem.ToString();
+                SelectedID = RetrieveIdBasedOnLocation(areaParameter, addressParameter, queryString);
+
                 adapterInitialization();
+
+                UnfilteredDataGridView.Show();
+                whileNotEditingControlsStatus(true);
+                GetData();
             }
             else
             {
@@ -69,16 +121,12 @@ namespace Apartment_Building_Management
 
         public override void adapterInitialization()
         {
-            UnfilteredDataGridView.Show();
-            whileNotEditingControlsStatus(true);
-
-            string queryString = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
-            string areaParameter = areaComboBox.SelectedItem.ToString();
-            string addressParameter = addressComboBox.SelectedItem.ToString();
-            SelectedID = RetrieveIdBasedOnLocation(areaParameter, addressParameter, queryString);
-
-            string selectQuery = "select buildingID as 'Building ID', theMonth as Month, theYear as Year, costCategory as 'Cost Category'" +
-            ", costDescription as 'Cost Description', cost as Cost from dapanes where buildingID = @buildingID and theMonth = @theMonth and theYear = @theYear";
+            if(name.Length == 3)
+            {
+                value[0] = SelectedID;
+                value[1] = monthComboBox.SelectedItem.ToString();
+                value[2] = yearComboBox.SelectedItem.ToString();
+            }
 
             SqlConnection connection = new SqlConnection(ConnectionString);
 
@@ -86,49 +134,21 @@ namespace Apartment_Building_Management
             selectCommand.CommandText = selectQuery;
             selectCommand.Connection = connection;
 
-            SqlParameter parameter1 = new SqlParameter();
-            parameter1.ParameterName = "@buildingID";
-            parameter1.SqlDbType = SqlDbType.VarChar;
-            parameter1.SourceColumn = "buildingID";
-            parameter1.Value = SelectedID;
+            SqlParameter[] parameter = new SqlParameter[commandParameters];
 
-            SqlParameter parameter2 = new SqlParameter();
-            parameter2.ParameterName = "@theMonth";
-            parameter2.SqlDbType = SqlDbType.NVarChar;
-            parameter2.SourceColumn = "theMonth";
-            parameter2.Value = monthComboBox.SelectedItem.ToString();
-
-            SqlParameter parameter3 = new SqlParameter();
-            parameter3.ParameterName = "@theYear";
-            parameter3.SqlDbType = SqlDbType.VarChar;
-            parameter3.SourceColumn = "theYear";
-            parameter3.Value = yearComboBox.SelectedItem.ToString();
-
-            selectCommand.Parameters.Add(parameter1);
-            selectCommand.Parameters.Add(parameter2);
-            selectCommand.Parameters.Add(parameter3);
+            for(int i=0; i < commandParameters; i++)
+            {
+                parameter[i] = new SqlParameter();
+                parameter[i].ParameterName = name[i];
+                parameter[i].SqlDbType = type[i];
+                parameter[i].SourceColumn = column[i];
+                parameter[i].Value = value[i];
+                selectCommand.Parameters.Add(parameter[i]);
+            }
 
             Adapter = new SqlDataAdapter();
             Adapter.SelectCommand = selectCommand;
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(Adapter);
-
-            GetData();
-
-            /*
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = selectCommand;
-
-            SqlCommandBuilder builder = new SqlCommandBuilder(da);
-
-            Adapter = da;
-
-            GetData2();
-             * */
-
-            for (int i = 0; i < 3; i++ )
-            {
-                UnfilteredDataGridView.Columns[i].Visible = false;
-            }
 
             whileEditingControlsStatus(false);
             whileNotEditingControlsStatus(true);

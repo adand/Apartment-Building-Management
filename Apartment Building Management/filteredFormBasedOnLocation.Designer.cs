@@ -95,7 +95,7 @@
 
         #endregion
 
-        public System.Windows.Forms.ComboBox areaComboBox;
+        public System.Windows.Forms.ComboBox areaComboBox = new System.Windows.Forms.ComboBox();
         public System.Windows.Forms.ComboBox addressComboBox;
         private System.Windows.Forms.Label areaLbl;
         private System.Windows.Forms.Label addressLbl;

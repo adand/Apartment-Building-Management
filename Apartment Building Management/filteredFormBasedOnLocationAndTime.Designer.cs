@@ -34,6 +34,14 @@
             this.yearLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // areaComboBox
+            // 
+            this.areaComboBox.SelectedIndexChanged += new System.EventHandler(this.areaComboBox_SelectedIndexChanged);
+            // 
+            // addressComboBox
+            // 
+            this.addressComboBox.SelectedIndexChanged += new System.EventHandler(this.addressComboBox_SelectedIndexChanged);
+            // 
             // yearComboBox
             // 
             this.yearComboBox.FormattingEnabled = true;

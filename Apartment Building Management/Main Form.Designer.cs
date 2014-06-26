@@ -33,6 +33,7 @@
             this.exitBtn = new System.Windows.Forms.Button();
             this.apartmentsBtn = new System.Windows.Forms.Button();
             this.dapanesBtn = new System.Windows.Forms.Button();
+            this.aggregateBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buildingsBtn
@@ -85,9 +86,20 @@
             this.dapanesBtn.UseVisualStyleBackColor = true;
             this.dapanesBtn.Click += new System.EventHandler(this.dapanesBtn_Click);
             // 
+            // aggregateBtn
+            // 
+            this.aggregateBtn.Location = new System.Drawing.Point(520, 120);
+            this.aggregateBtn.Name = "aggregateBtn";
+            this.aggregateBtn.Size = new System.Drawing.Size(153, 41);
+            this.aggregateBtn.TabIndex = 5;
+            this.aggregateBtn.Text = "Συγκεντρωτική κατάσταση δαπανών";
+            this.aggregateBtn.UseVisualStyleBackColor = true;
+            this.aggregateBtn.Click += new System.EventHandler(this.aggregateBtn_Click);
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(625, 367);
+            this.ClientSize = new System.Drawing.Size(763, 414);
+            this.Controls.Add(this.aggregateBtn);
             this.Controls.Add(this.dapanesBtn);
             this.Controls.Add(this.apartmentsBtn);
             this.Controls.Add(this.exitBtn);
@@ -106,6 +118,7 @@
         private System.Windows.Forms.Button exitBtn;
         private System.Windows.Forms.Button apartmentsBtn;
         private System.Windows.Forms.Button dapanesBtn;
+        private System.Windows.Forms.Button aggregateBtn;
     }
 }
 

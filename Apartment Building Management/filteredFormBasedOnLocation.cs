@@ -28,12 +28,6 @@ namespace Apartment_Building_Management
             addressComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
-        public ComboBox AreaComboBox
-        {
-            get { return areaComboBox; }
-            set { areaComboBox = value; }
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -111,6 +105,10 @@ namespace Apartment_Building_Management
 
         public virtual void addressComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string queryString = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
+            string areaParameter = areaComboBox.SelectedItem.ToString();
+            string addressParameter = addressComboBox.SelectedItem.ToString();
+            SelectedID = RetrieveIdBasedOnLocation(areaParameter, addressParameter, queryString);
             adapterInitialization();
         }
 
@@ -119,10 +117,10 @@ namespace Apartment_Building_Management
             UnfilteredDataGridView.Show();
             whileNotEditingControlsStatus(true);
 
-            string queryString = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
+            /*string queryString = "select buildingID from buildings where bArea = @Area and bAddress = @Address";
             string areaParameter = areaComboBox.SelectedItem.ToString();
             string addressParameter = addressComboBox.SelectedItem.ToString();
-            selectedID = RetrieveIdBasedOnLocation(areaParameter, addressParameter, queryString);
+            selectedID = RetrieveIdBasedOnLocation(areaParameter, addressParameter, queryString);*/
 
             string selectQuery = "select buildingID as 'Building ID', owner as Owner, apartmentID as 'Apartment ID', generalProportion as 'General Proportion (‰)', " +
             "elevatorProportion as 'Elevator Proportion (‰)' from Apartments where buildingID = @buildingID order by apartmentID";

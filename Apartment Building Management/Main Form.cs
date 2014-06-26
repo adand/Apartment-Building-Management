@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace Apartment_Building_Management
 {
@@ -52,7 +53,7 @@ namespace Apartment_Building_Management
             this.Hide();
             filteredFormBasedOnLocation apartments = new filteredFormBasedOnLocation();
             string queryString = "select distinct bArea from buildings order by bArea";
-            apartments.fillTheComboBox(queryString, apartments.AreaComboBox);
+            apartments.fillTheComboBox(queryString, apartments.areaComboBox);
 
             apartments.whileEditingControlsStatus(false);
             apartments.whileNotEditingControlsStatus(true);
@@ -65,9 +66,23 @@ namespace Apartment_Building_Management
         private void dapanesBtn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            filteredFormBasedOnLocationAndTime dapanes = new filteredFormBasedOnLocationAndTime();
+
+            string[] name = { "@buildingID", "@theMonth", "@theYear" };
+            SqlDbType[] type = { SqlDbType.VarChar, SqlDbType.NVarChar, SqlDbType.VarChar };
+            string[] column = { "buildingID", "theMonth", "theYear" };
+            int commandParameters = name.Length;
+
+            string selectQuery = "select buildingID as 'Building ID', theMonth as Month, theYear as Year, costCategory as 'Cost Category'" +
+            ", costDescription as 'Cost Description', cost as Cost from dapanes where buildingID = @buildingID and theMonth = @theMonth and theYear = @theYear";
+
+            filteredFormBasedOnLocationAndTime dapanes = new filteredFormBasedOnLocationAndTime(selectQuery, commandParameters);
+
+            dapanes._Name = name;
+            dapanes.Type = type;
+            dapanes.Column = column;
+
             string queryString = "select distinct bArea from buildings order by bArea";
-            dapanes.fillTheComboBox(queryString, dapanes.AreaComboBox);
+            dapanes.fillTheComboBox(queryString, dapanes.areaComboBox);
 
             dapanes.whileEditingControlsStatus(false);
             dapanes.whileNotEditingControlsStatus(true);
@@ -75,6 +90,45 @@ namespace Apartment_Building_Management
             dapanes.UnfilteredDataGridView.Hide();
             dapanes.addressComboBox.Enabled = false;
             dapanes.Show();
+        }
+
+        private void aggregateBtn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+            string[] name = { "@buildingID", "@theMonth", "@theYear" };
+            SqlDbType[] type = { SqlDbType.VarChar, SqlDbType.NVarChar, SqlDbType.VarChar };
+            string[] column = { "buildingID", "theMonth", "theYear" };
+            int commandParameters = name.Length;
+
+            string selectQuery =
+                    "select apartmentID as 'Apartment ID', " +
+                        "generalProportion as 'General Proportion', " +
+                        "(select sum(cost) * ( A1.generalProportion / 1000 ) " +
+                        "from dapanes A2 " +
+                        "where theMonth = @theMonth and theYear = @theYear and A2.buildingID = A1.buildingID and costCategory = N'Γενικά κοινόχρηστα') Cost1, " +
+                        "elevatorProportion as 'Elevator Proportion', " +
+                        "(select sum(cost) * ( A1.elevatorProportion / 1000 ) " +
+                        "from dapanes A3 " +
+                        "where theMonth = @theMonth and theYear = @theYear and A3.buildingID = A1.buildingID and costCategory = N'Ασανσέρ') Cost2 " +
+                    "from Apartments A1 " +
+                    "where A1.buildingID = @buildingID";
+
+            filteredFormBasedOnLocationAndTime aggregate = new filteredFormBasedOnLocationAndTime(selectQuery, commandParameters);
+
+            aggregate._Name = name;
+            aggregate.Type = type;
+            aggregate.Column = column;
+
+            string queryString = "select distinct bArea from buildings order by bArea";
+            aggregate.fillTheComboBox(queryString, aggregate.areaComboBox);
+
+            aggregate.whileEditingControlsStatus(false);
+            aggregate.whileNotEditingControlsStatus(true);
+            aggregate.EditBtn.Hide();
+            aggregate.UnfilteredDataGridView.Hide();
+            aggregate.addressComboBox.Enabled = false;
+            aggregate.Show();
         }
     }
 }
