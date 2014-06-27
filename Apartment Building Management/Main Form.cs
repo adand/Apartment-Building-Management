@@ -102,17 +102,30 @@ namespace Apartment_Building_Management
             int commandParameters = name.Length;
 
             string selectQuery =
+                "select [Apartment ID], sum([General Proportion]) as 'General Proportion', format(sum([General Cost]), 'C', 'el-GR') as 'General Cost', " + 
+                "sum([Elevator Proportion]) as 'Elevator Proportion', format(sum([Elevator Cost]), 'C', 'el-GR') as 'Elevator Cost', " + 
+                "format(sum([Total Cost]), 'C', 'el-GR') as 'Total Cost' from (" + 
+                "select [Apartment ID], [General Proportion], [General Cost] as 'General Cost', " +
+                "[Elevator Proportion], [Elevator Cost] as 'Elevator Cost', " +
+                "[General Cost] + [Elevator Cost] as 'Total Cost' from (" +
                     "select apartmentID as 'Apartment ID', " +
                         "generalProportion as 'General Proportion', " +
-                        "(select sum(cost) * ( A1.generalProportion / 1000 ) " +
+                        "(select convert(decimal(7,2), (sum(cost) * ( A1.generalProportion / 1000 ))) as generalCost " +
                         "from dapanes A2 " +
-                        "where theMonth = @theMonth and theYear = @theYear and A2.buildingID = A1.buildingID and costCategory = N'Γενικά κοινόχρηστα') Cost1, " +
+                        "where theMonth = @theMonth and theYear = @theYear and A2.buildingID = A1.buildingID and costCategory = N'Γενικά κοινόχρηστα') as 'General Cost', " +
                         "elevatorProportion as 'Elevator Proportion', " +
-                        "(select sum(cost) * ( A1.elevatorProportion / 1000 ) " +
+                        "(select convert(decimal(7,2), (sum(cost) * ( A1.elevatorProportion / 1000 ))) as elevatorCost " +
                         "from dapanes A3 " +
-                        "where theMonth = @theMonth and theYear = @theYear and A3.buildingID = A1.buildingID and costCategory = N'Ασανσέρ') Cost2 " +
+                        "where theMonth = @theMonth and theYear = @theYear and A3.buildingID = A1.buildingID and costCategory = N'Ασανσέρ') as 'Elevator Cost' " +
                     "from Apartments A1 " +
-                    "where A1.buildingID = @buildingID";
+                    "where A1.buildingID = @buildingID) as table1) as table2 group by [Apartment ID] with rollup";
+                    /*"union " +
+                    "select null, null, '3', '4', '5', '6', '7', null as table2) as t3 group by [Apartment ID] with rollup";*/
+                    /*
+                    "select null, null, " + 
+                    "select sum(generalProportion) from Apartments where buildingID = @buildingID, " +
+                    "select sum(), '5', '6', '7', null) as table2 " +
+                    "order by case when Row is null then 1 else 0 end, [Apartment ID]";*/
 
             filteredFormBasedOnLocationAndTime aggregate = new filteredFormBasedOnLocationAndTime(selectQuery, commandParameters);
 
