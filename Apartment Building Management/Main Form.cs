@@ -119,13 +119,6 @@ namespace Apartment_Building_Management
                         "where theMonth = @theMonth and theYear = @theYear and A3.buildingID = A1.buildingID and costCategory = N'Ασανσέρ') as 'Elevator Cost' " +
                     "from Apartments A1 " +
                     "where A1.buildingID = @buildingID) as table1) as table2 group by [Apartment ID] with rollup";
-                    /*"union " +
-                    "select null, null, '3', '4', '5', '6', '7', null as table2) as t3 group by [Apartment ID] with rollup";*/
-                    /*
-                    "select null, null, " + 
-                    "select sum(generalProportion) from Apartments where buildingID = @buildingID, " +
-                    "select sum(), '5', '6', '7', null) as table2 " +
-                    "order by case when Row is null then 1 else 0 end, [Apartment ID]";*/
 
             filteredFormBasedOnLocationAndTime aggregate = new filteredFormBasedOnLocationAndTime(selectQuery, commandParameters);
 
@@ -142,6 +135,11 @@ namespace Apartment_Building_Management
             aggregate.UnfilteredDataGridView.Hide();
             aggregate.addressComboBox.Enabled = false;
             aggregate.Show();
+        }
+
+        private void MainForm_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -107,6 +107,7 @@
             this.Controls.Add(this.buildingsBtn);
             this.Name = "MainForm";
             this.Text = "Main Form";
+            this.Load += new System.EventHandler(this.MainForm_Load_1);
             this.ResumeLayout(false);
 
         }
